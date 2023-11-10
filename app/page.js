@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import OpenAI from 'openai'
 import 'dotenv/config'
 import responseLogic from './utils/responseLogic'
@@ -11,17 +11,22 @@ export default function Home() {
   const [userInputValue, setUserInputValue] = useState('')
   const [userInput, setUserInput] = useState('')
   const [chatLog, setChatLog] = useState([])
+  const chatBoxRef = useRef(null);
+
 
   useEffect(() => {
-    setChatLog([...chatLog, response])
-    console.log(chatLog)
-  }, [response])
+    // automatically scrolls chat box to bottom when new message is sent
+    if (chatBoxRef) {
+      chatBoxRef.current.addEventListener('DOMNodeInserted', event => {
+        const { currentTarget: target } = event;
+        target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+      });
+    }
+  }, [chatLog])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setChatLog([...chatLog, userInput])
-    setUserInputValue(userInput)
-    setResponse(await responseLogic(userInput));
+    setChatLog(await responseLogic(userInput))
     setUserInput('');
   }
 
@@ -30,21 +35,21 @@ export default function Home() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
         <div className="mx-auto max-w-4xl">
-          <p className=' mt-16 p-5 overflow-auto w-full] h-[20rem]'>
+          <div className='mt-16 p-5 overflow-auto w-full] h-[20rem]' ref={chatBoxRef}>
             {chatLog.map((chat, index) => {
-              if (index === 0 || (index % 2 !== 0)) {
-                return <div className=' text-right pl-8 py-1 text-green-500'>
-                  {chat}
+              if (chat.role === "user") {
+                return <div key={index} className=' text-right pl-8 py-1 text-green-500'>
+                  {chat.content}
                 </div>
-              } else {
-                return <div className='text-left pr-8 py-1 text-red-500'>
-                  {chat}
+              } else if (chat.role === "assistant") {
+                return <div key={index} className='text-left pr-8 py-1 text-red-500'>
+                  {chat.content}
                 </div>
               }
-            })}</p>
+            })}</div>
           <div>
             <div className="mt-2">
-              <form onSubmit={(e) => handleSubmit(e)}>
+              <form onSubmit={(e) => handleSubmit(e)} autoComplete='off'>
                 <input
                   type="text"
                   name="text"
