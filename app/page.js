@@ -13,7 +13,6 @@ export default function Home() {
   const [chatLog, setChatLog] = useState([])
 
   useEffect(() => {
-    console.log('useeffect hit')
     setChatLog([...chatLog, response])
     console.log(chatLog)
   }, [response])
@@ -30,18 +29,19 @@ export default function Home() {
     <>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
-        <div className="mx-auto max-w-3xl">
-          <p className='py-40'>{chatLog.map((chat, index) => {
-            if (index === 0 || (index % 2 !== 0)) {
-              return <div className=' text-right pl-8 py-1 text-green-500'>
-                {chat}
-              </div>
-            } else {
-              return <div className='text-left pr-8 py-1 text-red-500'>
-                {chat}
-              </div>
-            }
-          })}</p>
+        <div className="mx-auto max-w-4xl">
+          <p className=' mt-16 p-5 overflow-auto w-full] h-[20rem]'>
+            {chatLog.map((chat, index) => {
+              if (index === 0 || (index % 2 !== 0)) {
+                return <div className=' text-right pl-8 py-1 text-green-500'>
+                  {chat}
+                </div>
+              } else {
+                return <div className='text-left pr-8 py-1 text-red-500'>
+                  {chat}
+                </div>
+              }
+            })}</p>
           <div>
             <div className="mt-2">
               <form onSubmit={(e) => handleSubmit(e)}>
