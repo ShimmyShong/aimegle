@@ -7,7 +7,7 @@ import 'dotenv/config'
 import responseLogic from './utils/responseLogic'
 
 export default function Home() {
-  const [response, setResponse] = useState('')
+  const [loading, setLoading] = useState(false)
   const [userInputValue, setUserInputValue] = useState('')
   const [userInput, setUserInput] = useState('')
   const [chatLog, setChatLog] = useState([])
@@ -26,8 +26,15 @@ export default function Home() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setChatLog(await responseLogic(userInput))
-    setUserInput('');
+    setLoading(true)
+    try {
+      setChatLog(await responseLogic(userInputValue))
+
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -47,14 +54,15 @@ export default function Home() {
                 </div>
               }
             })}</div>
+          {loading && <div className="loading-indicator">Loading...</div>}
           <div>
             <div className="mt-2">
-              <form onSubmit={(e) => handleSubmit(e)} autoComplete='off'>
+              <form onSubmit={(e) => handleSubmit(e) & setUserInput('')} autoComplete='off'>
                 <input
                   type="text"
                   name="text"
                   id="text"
-                  onChange={(e) => setUserInput(e.target.value)}
+                  onChange={(e) => setUserInput(e.target.value) & setUserInputValue(e.target.value)}
                   value={userInput}
                   className="block w-full rounded-md border-0 p-[1rem] text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   placeholder="type here..."
