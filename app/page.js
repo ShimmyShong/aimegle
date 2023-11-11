@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useEffect, useState, useRef } from 'react'
 import OpenAI from 'openai'
 import 'dotenv/config'
-import responseLogic from './utils/responseLogic'
+import responseLogic, { resetHistory } from './utils/responseLogic'
 import { randomWait } from './utils/randomWait'
 
 export default function Home() {
@@ -12,8 +12,35 @@ export default function Home() {
   const [userInputValue, setUserInputValue] = useState('')
   const [userInput, setUserInput] = useState('')
   const [chatLog, setChatLog] = useState([])
+  const [deleteCount, setDeleteCount] = useState(1)
+  const [isDelete, setIsDelete] = useState(false)
   const chatBoxRef = useRef(null);
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      setDeleteCount((prevDeleteCount) => prevDeleteCount + 1)
+      console.log(deleteCount)
+      if (deleteCount % 2 === 0) {
+        resetHistory();
+        setChatLog([])
+      }
+    }
+  };
+
+  const handleBlur = (event) => {
+    setDeleteCount(1)
+    console.log('screen')
+  }
+
+  const handleDeleteClick = (event) => {
+    console.log('button')
+    setDeleteCount((prevDeleteCount) => prevDeleteCount + 1)
+    console.log(deleteCount)
+    if (deleteCount % 2 === 0) {
+      resetHistory();
+      setChatLog([])
+    }
+  };
 
   useEffect(() => {
     // automatically scrolls chat box to bottom when new message is sent
@@ -23,7 +50,12 @@ export default function Home() {
         target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
       });
     }
-  }, [chatLog])
+    if (deleteCount % 2 === 0) {
+      setIsDelete(true)
+    } else {
+      setIsDelete(false)
+    }
+  }, [chatLog, deleteCount])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -47,7 +79,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="mx-auto p-4">
+      <div className="mx-auto p-4" onKeyDown={handleKeyDown}>
         {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
         <div className="mx-auto">
           <div className='mt-6 py-4 overflow-auto w-full h-[80vh] bg-white shadow-sm ring-1 ring-inset ring-gray-400 rounded-t-xl' ref={chatBoxRef}>
@@ -71,12 +103,25 @@ export default function Home() {
           <div>
             <div className="mt-2">
               <form onSubmit={(e) => handleSubmit(e) & setUserInput('')} autoComplete='off' className='flex flex-row gap-3'>
-                <button
-                  type="button"
-                  className="rounded-bl-xl bg-white font-semibold text-black py-2 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-400"
-                >
-                  Disconnect
-                </button>
+                {isDelete
+                  ? <button
+                    type="button"
+                    onClick={handleDeleteClick}
+                    onBlur={handleBlur}
+                    className="rounded-bl-xl bg-white text-black py-2 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-400"
+                  >
+                    <p className='font-semibold'>Are you sure?</p>
+                    <p className=' text-sm text-sky-500'>Esc</p>
+                  </button>
+                  : <button
+                    type="button"
+                    onClick={handleDeleteClick}
+                    onBlur={handleBlur}
+                    className="rounded-bl-xl bg-white text-black py-2 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-400"
+                  >
+                    <p className='font-semibold'>Disconnect</p>
+                    <p className=' text-sm text-sky-500'>Esc</p>
+                  </button>}
                 <input
                   type="text"
                   name="text"
