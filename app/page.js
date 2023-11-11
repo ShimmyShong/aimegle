@@ -39,39 +39,46 @@ export default function Home() {
 
   return (
     <>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto py-4">
         {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
-        <div className="mx-auto max-w-4xl">
-          <div className='mt-16 p-5 overflow-auto w-full] h-[20rem]' ref={chatBoxRef}>
+        <div className="mx-auto">
+          <div className='mt-6 py-5 overflow-auto w-full h-[30rem] bg-white shadow-sm ring-1 ring-inset ring-gray-300' ref={chatBoxRef}>
             {chatLog.map((chat, index) => {
               if (chat.role === "user") {
-                return <div key={index} className=' text-right pl-8 py-1 text-green-500'>
+                return <div key={index} className=' text-right pl-8 pb-4 text-green-500'>
                   {chat.content}
                 </div>
               } else if (chat.role === "assistant") {
-                return <div key={index} className='text-left pr-8 py-1 text-red-500'>
+                return <div key={index} className='text-left pr-8 pb-4 text-red-500'>
                   {chat.content}
                 </div>
               }
             })}</div>
-          {loading && <div className="loading-indicator">Loading...</div>}
+          {loading && <div className="loading-indicator absolute translate-y-[-1.1rem]">
+            Stranger is typing...
+          </div>}
           <div>
             <div className="mt-2">
-              <form onSubmit={(e) => handleSubmit(e) & setUserInput('')} autoComplete='off'>
+              <form onSubmit={(e) => handleSubmit(e) & setUserInput('')} autoComplete='off' className='flex flex-row gap-3'>
+                <button
+                  type="button"
+                  className=" bg-white text-black py-2 px-8 hover:bg-slate-50 shadow-sm ring-1 ring-inset ring-gray-300"
+                >
+                  Disconnect
+                </button>
                 <input
                   type="text"
                   name="text"
                   id="text"
                   onChange={(e) => setUserInput(e.target.value) & setUserInputValue(e.target.value)}
                   value={userInput}
-                  className="block w-full rounded-md border-0 p-[1rem] text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  placeholder="type here..."
+                  className="block w-full border-0 p-[2rem] text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
                 <button
-                  type="submit" // Use type="button" to prevent form submission
-                  className="mt-2 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+                  type="submit"
+                  className=" bg-white text-black py-2 px-8 hover:bg-slate-50 shadow-sm ring-1 ring-inset ring-gray-300"
                 >
-                  Submit
+                  Send
                 </button>
               </form>
             </div>

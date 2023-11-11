@@ -4,10 +4,11 @@ import { env } from '@/next.config'
 
 // this array is used to store the conversation
 let chatHistory = [{ role: "system", content: "You are a helpful assistant. Speak very briefly." }];
+const openai = new OpenAI({ apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, dangerouslyAllowBrowser: true })
 
 export default async function responseLogic(input = 'Hello!') {
     console.log(input)
-    const openai = new OpenAI({ apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, dangerouslyAllowBrowser: true })
+
 
     async function main(input) {
         chatHistory.push({
