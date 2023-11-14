@@ -14,29 +14,44 @@ export default function Home() {
   const [chatLog, setChatLog] = useState([])
   const [deleteCount, setDeleteCount] = useState(1)
   const [isDelete, setIsDelete] = useState(false)
+  const [disconnect, setDisconnect] = useState(false)
   const chatBoxRef = useRef(null);
 
   const handleKeyDown = (event) => {
     if (event.key === 'Escape') {
-      setDeleteCount((prevDeleteCount) => prevDeleteCount + 1)
-      if (deleteCount % 2 === 0) {
+      if (disconnect) {
+        setDisconnect(false)
         resetHistory();
         setChatLog([])
+        return
+      }
+      setDeleteCount((prevDeleteCount) => prevDeleteCount + 1)
+      if (deleteCount % 2 === 0) {
+        setDisconnect(true)
       }
     }
   };
 
   const handleBlur = () => {
+    console.log('blurred')
     setDeleteCount(1)
   }
 
   const handleDeleteClick = () => {
     setDeleteCount((prevDeleteCount) => prevDeleteCount + 1)
     if (deleteCount % 2 === 0) {
+      setDisconnect(true)
       resetHistory();
       setChatLog([])
     }
   };
+
+  const handleDisconnectClick = () => {
+    resetHistory();
+    setChatLog([])
+    setDeleteCount(1)
+    setDisconnect(false)
+  }
 
   useEffect(() => {
     // automatically scrolls chat box to bottom when new message is sent
@@ -55,7 +70,7 @@ export default function Home() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!userInput.trim()) return;
+    if (!userInput.trim() || disconnect) return;
     setChatLog([...chatLog, {
       role: "user", content: userInput
     }]);
@@ -73,6 +88,8 @@ export default function Home() {
       setLoading(false)
     }
   }
+
+
 
   return (
     <>
@@ -100,7 +117,35 @@ export default function Home() {
           <div>
             <div className="mt-2">
               <form onSubmit={(e) => handleSubmit(e) & setUserInput('')} autoComplete='off' className='flex flex-row gap-3'>
-                {isDelete
+                {disconnect
+                  ? <button
+                    type="button"
+                    onClick={handleDisconnectClick}
+                    className="rounded-bl-xl bg-gradient-to-b from-blue-300 via-blue-400 to-blue-500 text-white py-2 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-400"
+                  >
+                    <p className='font-semibold'>New</p>
+                    <p className=' text-sm'>Esc</p>
+                  </button>
+                  : isDelete
+                    ? <button
+                      type="button"
+                      onClick={handleDeleteClick}
+                      onBlur={handleBlur}
+                      className="rounded-bl-xl bg-white text-black py-2 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-400"
+                    >
+                      <p className='font-semibold'>Are you sure?</p>
+                      <p className=' text-sm text-sky-500'>Esc</p>
+                    </button>
+                    : <button
+                      type="button"
+                      onClick={handleDeleteClick}
+                      onBlur={handleBlur}
+                      className="rounded-bl-xl bg-white text-black py-2 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-400"
+                    >
+                      <p className='font-semibold'>Disconnect</p>
+                      <p className=' text-sm text-sky-500'>Esc</p>
+                    </button>}
+                {/* {isDelete
                   ? <button
                     type="button"
                     onClick={handleDeleteClick}
@@ -118,7 +163,7 @@ export default function Home() {
                   >
                     <p className='font-semibold'>Disconnect</p>
                     <p className=' text-sm text-sky-500'>Esc</p>
-                  </button>}
+                  </button>} */}
                 <input
                   type="text"
                   name="text"

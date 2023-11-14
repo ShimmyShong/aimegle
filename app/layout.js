@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
           </div>
 
           <div>
-            <h2 className='text-2xl text-sky-300 hidden sm:inline-block'>
+            <h2 className='text-2xl text-sky-400 hidden sm:inline-block'>
               <span className='font-bold text-4xl'>Ꝏ+</span> online now
             </h2>
           </div>

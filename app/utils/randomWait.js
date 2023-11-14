@@ -10,9 +10,10 @@ export const randomWait = () => {
 }
 
 export const randomResponseTime = (response) => {
+    let randomVariable = Math.random() * (1 - 2) + 2; // gets a random variable between 1 and 5
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, response.length * 75)
+        }, response.length * (50 * randomVariable))
     })
 }
