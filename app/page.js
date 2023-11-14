@@ -28,6 +28,7 @@ export default function Home() {
       setDeleteCount((prevDeleteCount) => prevDeleteCount + 1)
       if (deleteCount % 2 === 0) {
         setDisconnect(true)
+        setChatLog((prevChatLog) => [...prevChatLog, { role: "disconnect", content: "You have disconnected." }]);
       }
     }
   };
@@ -41,8 +42,9 @@ export default function Home() {
     setDeleteCount((prevDeleteCount) => prevDeleteCount + 1)
     if (deleteCount % 2 === 0) {
       setDisconnect(true)
-      resetHistory();
-      setChatLog([])
+      setChatLog((prevChatLog) => [...prevChatLog, { role: "disconnect", content: "You have disconnected." }]);
+      // resetHistory();
+      // setChatLog([])
     }
   };
 
@@ -79,6 +81,12 @@ export default function Home() {
     try {
       const assistantResponse = await responseLogic(userInput);
 
+      if (assistantResponse === 'i must leave') {
+        setDisconnect(true)
+        setChatLog((prevChatLog) => [...prevChatLog, { role: "disconnect", content: "Stranger has disconnected." }]);
+        return
+      }
+
       // update chatLog with assistant's response
       setChatLog((prevChatLog) => [...prevChatLog, { role: "assistant", content: assistantResponse }]);
 
@@ -107,13 +115,28 @@ export default function Home() {
                 return <div key={index} className='pb-3 px-4'>
                   <span className='mr-1 font-extrabold text-red-500'>Stranger:</span>{chat.content}
                 </div>
+              } else if (chat.role === "disconnect") {
+                return <div key={index} className='pb-3 px-4'>
+                  <span className='mr-1 font-bold text-gray-600'>{chat.content}</span>
+                </div>
               }
             })}
+
             {
               loading && <div className="loading-indicator text-gray-600 font-bold pb-3 px-4">
                 Stranger is typing...
-              </div>
-            }</div>
+              </div>}
+            {disconnect
+              ? <button
+                type="button"
+                onClick={handleDisconnectClick}
+                className="rounded-[.4rem] bg-gradient-to-b from-blue-300 via-blue-400 to-blue-500 text-white py-4 mx-4 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-200">
+                <p className='text-2xl'>New chat</p>
+              </button> : null}
+            <div>
+
+            </div>
+          </div>
           <div>
             <div className="mt-2">
               <form onSubmit={(e) => handleSubmit(e) & setUserInput('')} autoComplete='off' className='flex flex-row gap-3'>
@@ -145,25 +168,6 @@ export default function Home() {
                       <p className='font-semibold'>Disconnect</p>
                       <p className=' text-sm text-sky-500'>Esc</p>
                     </button>}
-                {/* {isDelete
-                  ? <button
-                    type="button"
-                    onClick={handleDeleteClick}
-                    onBlur={handleBlur}
-                    className="rounded-bl-xl bg-white text-black py-2 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-400"
-                  >
-                    <p className='font-semibold'>Are you sure?</p>
-                    <p className=' text-sm text-sky-500'>Esc</p>
-                  </button>
-                  : <button
-                    type="button"
-                    onClick={handleDeleteClick}
-                    onBlur={handleBlur}
-                    className="rounded-bl-xl bg-white text-black py-2 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-400"
-                  >
-                    <p className='font-semibold'>Disconnect</p>
-                    <p className=' text-sm text-sky-500'>Esc</p>
-                  </button>} */}
                 <input
                   type="text"
                   name="text"
