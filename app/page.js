@@ -19,7 +19,6 @@ export default function Home() {
   const handleKeyDown = (event) => {
     if (event.key === 'Escape') {
       setDeleteCount((prevDeleteCount) => prevDeleteCount + 1)
-      console.log(deleteCount)
       if (deleteCount % 2 === 0) {
         resetHistory();
         setChatLog([])
@@ -27,15 +26,12 @@ export default function Home() {
     }
   };
 
-  const handleBlur = (event) => {
+  const handleBlur = () => {
     setDeleteCount(1)
-    console.log('screen')
   }
 
-  const handleDeleteClick = (event) => {
-    console.log('button')
+  const handleDeleteClick = () => {
     setDeleteCount((prevDeleteCount) => prevDeleteCount + 1)
-    console.log(deleteCount)
     if (deleteCount % 2 === 0) {
       resetHistory();
       setChatLog([])
@@ -59,6 +55,7 @@ export default function Home() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!userInput.trim()) return;
     setChatLog([...chatLog, {
       role: "user", content: userInput
     }]);
@@ -82,7 +79,7 @@ export default function Home() {
       <div className="mx-auto p-4" onKeyDown={handleKeyDown}>
         {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
         <div className="mx-auto">
-          <div className='mt-6 py-4 overflow-auto w-full h-[80vh] bg-white shadow-sm ring-1 ring-inset ring-gray-400 rounded-t-xl' ref={chatBoxRef}>
+          <div className=' py-4 overflow-auto w-full h-[76vh] bg-white shadow-sm ring-1 ring-inset ring-gray-400 rounded-t-xl' ref={chatBoxRef}>
             <p className='text-gray-600 font-bold pb-3 px-4'>You're now chatting with a random stranger. Say hi!</p>
             {chatLog?.map((chat, index) => {
               if (chat.role === "user") {
@@ -134,7 +131,8 @@ export default function Home() {
                   type="submit"
                   className="rounded-br-xl bg-white font-semibold text-black py-2 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-400"
                 >
-                  Send
+                  <p>Send</p>
+                  <p className=' font-normal text-sm text-sky-500'>Enter</p>
                 </button>
               </form>
             </div>
