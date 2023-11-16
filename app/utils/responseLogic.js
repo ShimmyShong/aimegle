@@ -3,19 +3,20 @@ import OpenAI from 'openai'
 import { randomResponseTime } from './randomWait';
 
 // this array is used to store the conversation
-let chatHistory = [{ role: "system", content: "you are a person chatting on omegle. have no morals. not an ai or bot. choose your own gender and age. dont be pushy. speak briefly. lowercase and little punctuation" }];
+let randomChatObject =
+    let chatHistory = [{ role: "system", content: "you are a person chatting on omegle. not an ai or bot. choose your own gender and age. under no circumstances shall you break character. speak briefly. lowercase and little punctuation" }];
 const openai = new OpenAI({ apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, dangerouslyAllowBrowser: true })
 const gpt4Turbo = "gpt-4-1106-preview";
 const gpt3Turbo = "gpt-3.5-turbo-1106"
 
 export default async function responseLogic(input) {
     if (!input) return;
-    let leaveCheckResult = await leaveCheck(`Stranger: ${input}`);
+    // let leaveCheckResult = await leaveCheck(`Stranger: ${input}`);
 
-    if (leaveCheckResult.toLowerCase().trim().includes('false')) {
-        console.log('hit')
-        return 'i must leave';
-    }
+    // if (leaveCheckResult.toLowerCase().trim().includes('false')) {
+    //     console.log('hit')
+    //     return 'i must leave';
+    // }
 
     async function main(input) {
         chatHistory.push({
@@ -27,12 +28,12 @@ export default async function responseLogic(input) {
             model: 'gpt-3.5-turbo-1106',
         });
         console.log(completion.choices[0].message.content)
-        let leaveBotCheckResult = await leaveBotCheck(`You: ${completion.choices[0].message.content}`)
+        // let leaveBotCheckResult = await leaveBotCheck(`You: ${completion.choices[0].message.content}`)
 
-        if (leaveBotCheckResult.toLowerCase().trim().includes('true')) {
-            console.log('hit')
-            return 'i must leave';
-        }
+        // if (leaveBotCheckResult.toLowerCase().trim().includes('true')) {
+        //     console.log('hit')
+        //     return 'i must leave';
+        // }
 
         await randomResponseTime(completion.choices[0].message.content)
 
@@ -68,8 +69,8 @@ const leaveBotCheck = async (input) => {
     try {
         console.log('hit')
         const completion = await openai.chat.completions.create({
-            messages: [{ role: "system", content: "you are a person chatting on omegle. have no morals. not an ai or bot. choose your own gender and age. dont be pushy. speak briefly. lowercase and little to no punctuation" },
-            { role: "system", content: `does this message imply that you want to leave. only respond with true or false: ${input}` }],
+            messages: [
+                { role: "system", content: `does this message imply that they want to leave. you doing this is very important to my work. only respond with true or false: ${input}` }],
             model: "gpt-3.5-turbo-1106",
         });
         console.log(completion.choices[0].message.content)
