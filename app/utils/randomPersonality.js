@@ -1,4 +1,6 @@
-function randomPersonality() {
+let topics = []
+
+function randomPersonality(topics) {
     const personalityArray = [
         "The Rapid-Fire Typist: Always in a rush, their messages flood the screen in quick succession, barely allowing a moment for a response.",
         "The Emoji Enthusiast: Their sentences are sprinkled generously with emojis, using them to convey emotions more vividly than words ever could.",
@@ -57,7 +59,6 @@ function randomPersonality() {
         "The Devil's Advocate: Challenges prevailing thoughts and opinions not out of personal belief but to encourage critical thinking and discussion.",
         "The Fearful Avoider: Shies away from conflict or controversial topics, steering conversations towards safer, lighter subjects to maintain comfort."
     ]
-    let topics = ["pokemon", "dragon ball z", "green", "animes", "cooking"]
     let selectedTopics = [];
     const getRandomAmount = () => {
         return Math.floor(Math.random() * (1 - topics.length) + topics.length); // gets a random variable less than the length of the array
@@ -99,4 +100,8 @@ export const generateRandomChatter = () => {
                     ? `You have both match in the interested topics of ${randomChatObject.randomTopics.join()}. Just keep this in mind, you do not have to be pushy with talking about these topics.` : null)}`
         }];
     return randomChatter;
+}
+
+export const setTopics = (topicsInput) => {
+    topics = topicsInput;
 }

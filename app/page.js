@@ -1,4 +1,5 @@
 
+import TopicInput from '@/components/TopicInput'
 import flag from '../public/flag.jpg'
 import Image from 'next/image'
 
@@ -26,20 +27,17 @@ export default function Home() {
           <div className='flex mx-[6rem] p-3 justify-center bg-sky-200 rounded-[.5rem] shadow-lg ring-1 ring-inset ring-sky-100'>
             <p className='text-2xl font-extrabold'>Text not monitored. AI is king!</p>
           </div>
-          <div className='m-8 flex justify-between text-lg'>
-            <div>
-              <p className='text-center mb-2'>What do you wanna talk about?</p>
-              <textarea
-                className='p-2 w-[30rem] h-[4rem] text-start resize-none ring-1 ring-inset ring-gray-300 rounded-[.3rem]'>
-              </textarea>
-            </div>
+          <div className='m-4 flex justify-between text-lg'>
+            <TopicInput />
             <div>
               <p className='text-center mb-2'>Start Chatting:</p>
-              <button
-                type="button"
-                className="rounded-[.4rem] bg-gradient-to-b from-blue-300 via-blue-400 to-blue-500 text-white py-4 px-14 mx-4 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-200">
-                <p className='text-2xl'>Text</p>
-              </button>
+              <a href='/chat'>
+                <button
+                  type="button"
+                  className="rounded-[.4rem] bg-gradient-to-b from-blue-300 via-blue-400 to-blue-500 text-white py-4 px-14 mx-4 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-200">
+                  <p className='text-2xl'>Text</p>
+                </button>
+              </a>
             </div>
           </div>
         </div>
