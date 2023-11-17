@@ -6,7 +6,6 @@ import { generateRandomChatter } from './randomPersonality';
 // this array is used to store the conversation
 let randomChatter = generateRandomChatter();
 let chatHistory = [...randomChatter];
-console.log(chatHistory[0].content)
 const openai = new OpenAI({ apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, dangerouslyAllowBrowser: true })
 const gpt4Turbo = "gpt-4-1106-preview";
 const gpt3Turbo = "gpt-3.5-turbo-1106"
@@ -51,7 +50,6 @@ export default async function responseLogic(input) {
 
 export const resetHistory = () => {
     randomChatter = generateRandomChatter();
-    console.log(randomChatter[0].content)
     chatHistory = [...randomChatter];
 }
 
@@ -62,7 +60,6 @@ const leaveCheck = async (input) => {
             { role: "system", content: `if you were a person would you respond to this message? only respond with true or false: ${input}` }],
             model: "gpt-3.5-turbo-1106",
         });
-        console.log(completion.choices[0].message.content)
         return completion.choices[0].message.content;
     } catch (err) {
         console.error(err)
