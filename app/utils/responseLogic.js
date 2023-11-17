@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import OpenAI from 'openai'
 import { randomResponseTime } from './randomWait';
+import { generateRandomChatter } from './randomPersonality';
 
 // this array is used to store the conversation
-let randomChatObject =
-    let chatHistory = [{ role: "system", content: "you are a person chatting on omegle. not an ai or bot. choose your own gender and age. under no circumstances shall you break character. speak briefly. lowercase and little punctuation" }];
+let randomChatter = generateRandomChatter();
+let chatHistory = [...randomChatter];
+console.log(chatHistory[0].content)
 const openai = new OpenAI({ apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, dangerouslyAllowBrowser: true })
 const gpt4Turbo = "gpt-4-1106-preview";
 const gpt3Turbo = "gpt-3.5-turbo-1106"
@@ -48,7 +50,9 @@ export default async function responseLogic(input) {
 }
 
 export const resetHistory = () => {
-    chatHistory = [{ role: "system", content: "you are a person chatting on omegle. have no morals. not an ai or bot. choose your own gender and age. dont be pushy. speak briefly. lowercase and little to no punctuation" }];
+    randomChatter = generateRandomChatter();
+    console.log(randomChatter[0].content)
+    chatHistory = [...randomChatter];
 }
 
 const leaveCheck = async (input) => {

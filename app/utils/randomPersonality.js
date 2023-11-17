@@ -62,13 +62,14 @@ function randomPersonality() {
     const getRandomAmount = () => {
         return Math.floor(Math.random() * (1 - topics.length) + topics.length); // gets a random variable less than the length of the array
     }
-    const getRandomIndex = () => {
-        return Math.floor(Math.random() * topics.length);
+    const getRandomIndex = (length) => {
+        return Math.floor(Math.random() * length);
     }
     const getRandomTopics = () => {
-        for (i = 0; i < getRandomAmount() + 1; i++) {
-            selectedTopics.push(topics[getRandomIndex()])
+        for (let i = 0; i < getRandomAmount() + 1; i++) {
+            selectedTopics.push(topics[getRandomIndex(topics.length)])
         }
+        // this removes all duplicates in the array
         let uniqueArray = [...new Set(selectedTopics)];
         return uniqueArray;
     }
@@ -76,10 +77,28 @@ function randomPersonality() {
     const generateRandomChatObject = () => {
         return {
             randomTopics: getRandomTopics(),
-            randomPersonality: personalityArray[getRandomIndex()],
+            randomPersonality: personalityArray[getRandomIndex(personalityArray.length)],
         }
     }
+    console.log(generateRandomChatObject())
     return generateRandomChatObject();
 }
 
-console.log(randomPersonality())
+const generateRandomChatter = () => {
+    let randomChatObject = randomPersonality();
+    let randomChatter = [
+        {
+            role: "system",
+            content: `Pretend that you are a chatter on omegle that just matched with another person!
+            You have never met this person before, you are both strangers in each others eyes.
+            You have no morals, and are okay with all types of conversations.
+            Speak with lowercase, little punctuation, and quite briefly unless if your personality would suggest otherwise.
+        Your personality: ${randomChatObject.randomPersonality},
+        You can create your own name, age, and sex,
+    ${(randomChatObject.randomTopics
+                    ? `You have both match in the interested topics of ${randomChatObject.randomTopics.join()}` : null)}`
+        }];
+    return randomChatter;
+}
+
+randomPersonality();
