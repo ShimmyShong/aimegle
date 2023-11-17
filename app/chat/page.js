@@ -59,12 +59,18 @@ const page = () => {
                 target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
             });
         }
+        if (loading === true) {
+            let timeOut = 15;
+            setTimeout(() => {
+                setLoading(false)
+            }, timeOut * 1000);
+        }
         if (deleteCount % 2 === 0) {
             setIsDelete(true)
         } else {
             setIsDelete(false)
         }
-    }, [chatLog, deleteCount])
+    }, [chatLog, deleteCount, loading])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
