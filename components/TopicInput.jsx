@@ -19,6 +19,7 @@ const TopicInput = () => {
             if (!inputValue.trim()) return
             console.log('enter pressed')
             setTopicsArray([...topicsArray, inputValue])
+            setInputValue('')
         }
     }
 
