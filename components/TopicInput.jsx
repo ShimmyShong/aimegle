@@ -19,7 +19,6 @@ const TopicInput = () => {
             event.preventDefault(); // prevent linebreak on enter
             if (!inputValue.trim()) return
             console.log('enter pressed')
-            setInputValue('')
             setTopicsArray([...topicsArray, inputValue])
             setInputValue('')
         }

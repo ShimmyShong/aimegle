@@ -96,7 +96,7 @@ export const generateRandomChatter = (topics) => {
         Your personality: ${randomChatObject.randomPersonality},
         You can create your own name, age, and sex. Dont worry about sharing your age and sex, but use more discretion with sharing your name.
     ${(randomChatObject.randomTopics
-                    ? `You have both match in the interested topics of ${randomChatObject.randomTopics.join()}. Just keep this in mind, you do not have to be pushy with talking about these topics.` : null)}`
+                    ? `You have both match in the interested topics of ${randomChatObject.randomTopics.join()}. Just keep this in mind, you do not have to be pushy with talking about these topics.` : '')}`
         }];
     console.log(randomChatter[0].content)
     return randomChatter;

@@ -4,8 +4,8 @@ import { randomResponseTime } from './randomWait';
 import { generateRandomChatter } from './randomPersonality';
 
 const openai = new OpenAI({ apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, dangerouslyAllowBrowser: true })
-let randomChatter = generateRandomChatter(topics);
-let chatHistory = [...randomChatter];
+let randomChatter = '';
+let chatHistory = [];
 const gpt4Turbo = "gpt-4-1106-preview";
 
 export default async function responseLogic(input, topics) {

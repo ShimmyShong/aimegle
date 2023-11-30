@@ -2,6 +2,7 @@
 import { useEffect, useState, useRef } from 'react'
 import 'dotenv/config'
 import responseLogic, { resetHistory } from '../utils/responseLogic'
+import { generateRandomChatter } from '../utils/randomPersonality'
 import { randomWait } from '../utils/randomWait'
 import { useSelector } from 'react-redux'
 
@@ -23,7 +24,7 @@ const page = () => {
             console.log('escape hit')
             if (disconnect) {
                 setDisconnect(false)
-                resetHistory(topicss);
+                resetHistory(topics);
                 setChatLog([])
                 return
             }
@@ -78,6 +79,7 @@ const page = () => {
 
     useEffect(() => {
         console.log(topics)
+        resetHistory(topics)
     }, [])
 
     const handleSubmit = async (event) => {
