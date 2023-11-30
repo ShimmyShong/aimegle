@@ -1,5 +1,3 @@
-let topics = []
-
 function randomPersonality(topics) {
     const personalityArray = [
         "The Rapid-Fire Typist: Always in a rush, their messages flood the screen in quick succession, barely allowing a moment for a response.",
@@ -85,8 +83,9 @@ function randomPersonality(topics) {
     return generateRandomChatObject();
 }
 
-export const generateRandomChatter = () => {
-    let randomChatObject = randomPersonality();
+export const generateRandomChatter = (topics) => {
+    console.log(topics)
+    let randomChatObject = randomPersonality(topics);
     let randomChatter = [
         {
             role: "system",
@@ -99,9 +98,6 @@ export const generateRandomChatter = () => {
     ${(randomChatObject.randomTopics
                     ? `You have both match in the interested topics of ${randomChatObject.randomTopics.join()}. Just keep this in mind, you do not have to be pushy with talking about these topics.` : null)}`
         }];
+    console.log(randomChatter[0].content)
     return randomChatter;
-}
-
-export const setTopics = (topicsInput) => {
-    topics = topicsInput;
 }

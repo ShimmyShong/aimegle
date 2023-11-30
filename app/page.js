@@ -2,6 +2,7 @@
 import TopicInput from '@/components/TopicInput'
 import flag from '../public/flag.jpg'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -15,7 +16,7 @@ export default function Home() {
               <p>AImegle (A-I-meg-ull) is a great way to have a conversation even if the person isn't real. When you use AImegle, you are paired with a AI personality that is randomly generated to talk one-on-one. If you prefer, you can add your interests and you'll be randomly paired with an AI personality who have some of the same interests.</p>
             </div>
             <div>
-              <Image src={flag} className='w-[95rem] h-[9.2rem] pl-5' />
+              <Image src={flag} alt="american flag that has the text 'AI' on it" className='w-[95rem] h-[9.2rem] pl-5' />
             </div>
           </div>
           <div className='m-4'>
@@ -31,13 +32,13 @@ export default function Home() {
             <TopicInput />
             <div>
               <p className='text-center mb-2'>Start Chatting:</p>
-              <a href='/chat'>
+              <Link href='/chat'>
                 <button
                   type="button"
                   className="rounded-[.4rem] bg-gradient-to-b from-blue-300 via-blue-400 to-blue-500 text-white py-4 px-14 mx-4 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-200">
                   <p className='text-2xl'>Text</p>
                 </button>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
