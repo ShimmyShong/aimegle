@@ -3,15 +3,14 @@ import OpenAI from 'openai'
 import { randomResponseTime } from './randomWait';
 import { generateRandomChatter } from './randomPersonality';
 
-// this array is used to store the conversation
-let randomChatter = generateRandomChatter();
-let chatHistory = [...randomChatter];
 const openai = new OpenAI({ apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, dangerouslyAllowBrowser: true })
+let randomChatter = generateRandomChatter(topics);
+let chatHistory = [...randomChatter];
 const gpt4Turbo = "gpt-4-1106-preview";
-const gpt3Turbo = "gpt-3.5-turbo-1106"
 
-export default async function responseLogic(input) {
+export default async function responseLogic(input, topics) {
     if (!input) return;
+
     // let leaveCheckResult = await leaveCheck(`Stranger: ${input}`);
 
     // if (leaveCheckResult.toLowerCase().trim().includes('false')) {
@@ -48,8 +47,8 @@ export default async function responseLogic(input) {
     return main(input);
 }
 
-export const resetHistory = () => {
-    randomChatter = generateRandomChatter();
+export const resetHistory = (topics) => {
+    randomChatter = generateRandomChatter(topics);
     chatHistory = [...randomChatter];
 }
 
