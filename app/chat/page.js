@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from 'react'
 import 'dotenv/config'
 import responseLogic, { resetHistory } from '../utils/responseLogic'
 import { randomWait } from '../utils/randomWait'
+import { useSelector } from 'react-redux'
 
 const page = () => {
     const [loading, setLoading] = useState(false)
@@ -12,6 +13,9 @@ const page = () => {
     const [deleteCount, setDeleteCount] = useState(1)
     const [isDelete, setIsDelete] = useState(false) // used to change disconnect button depending on how many times "esc" or the button has been pressed
     const [disconnect, setDisconnect] = useState(false)
+
+    let topics = useSelector(((state) => state.topicReducer.topicsArray))
+
     const chatBoxRef = useRef(null);
 
     const handleKeyDown = (event) => {
@@ -19,7 +23,7 @@ const page = () => {
             console.log('escape hit')
             if (disconnect) {
                 setDisconnect(false)
-                resetHistory();
+                resetHistory(topicss);
                 setChatLog([])
                 return
             }
@@ -45,7 +49,7 @@ const page = () => {
     };
 
     const handleDisconnectClick = () => {
-        resetHistory();
+        resetHistory(topics);
         setChatLog([])
         setDeleteCount(1)
         setDisconnect(false)
@@ -72,6 +76,10 @@ const page = () => {
         }
     }, [chatLog, deleteCount, loading])
 
+    useEffect(() => {
+        console.log(topics)
+    }, [])
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         setDeleteCount(1)
@@ -82,7 +90,7 @@ const page = () => {
         await randomWait();
         setLoading(true)
         try {
-            const assistantResponse = await responseLogic(userInput);
+            const assistantResponse = await responseLogic(userInput, topics);
 
             if (assistantResponse === 'i must leave') {
                 setDisconnect(true)

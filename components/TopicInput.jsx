@@ -1,16 +1,17 @@
 'use client'
 
-import { setTopics } from '@/app/utils/randomPersonality'
 import React, { useEffect, useState } from 'react'
+import { setTopics } from '@/app/redux/features/topicSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 const TopicInput = () => {
     const [inputValue, setInputValue] = useState('')
     const [topicsArray, setTopicsArray] = useState([])
+    const dispatch = useDispatch()
+    const topics = useSelector(((state) => state.topicReducer.topicsArray))
 
     useEffect(() => {
-        console.log(topicsArray)
-        setTopics(topicsArray)
-        console.log(topicsArray)
+        dispatch(setTopics(topicsArray))
     }, [topicsArray])
 
     const handleEnterPress = (event) => {
@@ -18,6 +19,7 @@ const TopicInput = () => {
             event.preventDefault(); // prevent linebreak on enter
             if (!inputValue.trim()) return
             console.log('enter pressed')
+            setInputValue('')
             setTopicsArray([...topicsArray, inputValue])
         }
     }
