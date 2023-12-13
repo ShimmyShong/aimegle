@@ -8,7 +8,7 @@ let randomChatter = '';
 let chatHistory = [];
 const gpt4Turbo = "gpt-4-1106-preview";
 
-export default async function responseLogic(input, topics) {
+export default async function responseLogic(input) {
     if (!input) return;
 
     // let leaveCheckResult = await leaveCheck(`Stranger: ${input}`);
@@ -50,6 +50,7 @@ export default async function responseLogic(input, topics) {
 export const resetHistory = (topics) => {
     randomChatter = generateRandomChatter(topics);
     chatHistory = [...randomChatter];
+    console.log(randomChatter)
 }
 
 const leaveCheck = async (input) => {

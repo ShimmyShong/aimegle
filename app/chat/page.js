@@ -145,7 +145,7 @@ const page = () => {
                                 type="button"
                                 onClick={handleDisconnectClick}
                                 className="rounded-[.4rem] bg-gradient-to-b from-blue-300 via-blue-400 to-blue-500 text-white py-4 mx-4 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-200">
-                                <p className='text-2xl'>New chat</p>
+                                <p className='text-2xl px-1'>New chat</p>
                             </button> : null}
                         <div>
 
@@ -159,7 +159,7 @@ const page = () => {
                                         type="button"
                                         onClick={
                                             handleDisconnectClick}
-                                        className="rounded-bl-xl bg-gradient-to-b from-blue-300 via-blue-400 to-blue-500 text-white py-2 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-400"
+                                        className="rounded-bl-xl bg-gradient-to-b from-blue-300 via-blue-400 to-blue-500 text-white py-2 min-w-[5rem] sm:min-w-[8rem] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-400"
                                     >
                                         <p className='font-semibold'>New</p>
                                         <p className=' text-sm'>Esc</p>
@@ -169,7 +169,7 @@ const page = () => {
                                             type="button"
                                             onClick={handleDeleteClick}
                                             onBlur={handleBlur}
-                                            className="rounded-bl-xl bg-white text-black py-2 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-400"
+                                            className="rounded-bl-xl bg-white text-black py-2 sm:min-w-[8rem] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-400"
                                         >
                                             <p className='font-semibold'>Are you sure?</p>
                                             <p className=' text-sm text-sky-500'>Esc</p>
@@ -178,10 +178,10 @@ const page = () => {
                                             type="button"
                                             onClick={handleDeleteClick}
                                             onBlur={handleBlur}
-                                            className="rounded-bl-xl bg-white text-black py-2 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-400"
+                                            className="rounded-bl-xl bg-white text-black py-2 min-w-[5rem] sm:min-w-[8rem] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-400"
                                         >
-                                            <p className='font-semibold'>Disconnect</p>
-                                            <p className=' text-sm text-sky-500'>Esc</p>
+                                            <p className='font-semibold text-xs sm:text-base'>Disconnect</p>
+                                            <p className='hidden sm:block text-sm text-sky-500'>Esc</p>
                                         </button>}
                                 <input
                                     type="text"
@@ -195,7 +195,7 @@ const page = () => {
                                 <button
                                     type="submit"
                                     onBlur={handleBlur}
-                                    className="rounded-br-xl bg-white font-semibold text-black py-2 min-w-[10%] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-400"
+                                    className="hidden sm:block rounded-br-xl bg-white font-semibold text-black py-2 min-w-[8rem] hover:bg-slate-50 active:bg-slate-100 shadow-sm ring-1 ring-inset ring-gray-400"
                                 >
                                     <p>Send</p>
                                     <p className=' font-normal text-sm text-sky-500'>Enter</p>
