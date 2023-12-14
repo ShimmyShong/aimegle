@@ -119,23 +119,24 @@ const page = () => {
                 {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
                 <div className="mx-auto">
                     <div className=' py-4 overflow-auto w-full h-[70dvh] lg:h-[76dvh] bg-white shadow-sm ring-1 ring-inset ring-gray-400 rounded-t-xl' ref={chatBoxRef}>
-                        <p className='text-gray-600 font-bold pb-3 px-4'>You're now chatting with a random stranger. Say hi!</p>
-                        {chatLog?.map((chat, index) => {
-                            if (chat.role === "user") {
-                                return <div key={index} className='pb-3 px-4'>
-                                    <span className='mr-1 font-extrabold text-blue-800'>You:</span>{chat.content}
-                                </div>
-                            } else if (chat.role === "assistant") {
-                                return <div key={index} className='pb-3 px-4'>
-                                    <span className='mr-1 font-extrabold text-red-500'>Stranger:</span>{chat.content}
-                                </div>
-                            } else if (chat.role === "disconnect") {
-                                return <div key={index} className='pb-3 px-4'>
-                                    <span className='mr-1 font-bold text-gray-600'>{chat.content}</span>
-                                </div>
-                            }
-                        })}
-
+                        <div className='flex h-full justify-end sm:justify-start flex-col'>
+                            <p className='text-gray-600 font-bold pb-3 px-4'>You're now chatting with a random stranger. Say hi!</p>
+                            {chatLog?.map((chat, index) => {
+                                if (chat.role === "user") {
+                                    return <div key={index} className='pb-3 px-4'>
+                                        <span className='mr-1 font-extrabold text-blue-800'>You:</span>{chat.content}
+                                    </div>
+                                } else if (chat.role === "assistant") {
+                                    return <div key={index} className='pb-3 px-4'>
+                                        <span className='mr-1 font-extrabold text-red-500'>Stranger:</span>{chat.content}
+                                    </div>
+                                } else if (chat.role === "disconnect") {
+                                    return <div key={index} className='pb-3 px-4'>
+                                        <span className='mr-1 font-bold text-gray-600'>{chat.content}</span>
+                                    </div>
+                                }
+                            })}
+                        </div>
                         {
                             loading && <div className="loading-indicator text-gray-600 font-bold pb-3 px-4">
                                 Stranger is typing...

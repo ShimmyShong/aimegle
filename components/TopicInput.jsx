@@ -32,7 +32,7 @@ const TopicInput = () => {
         <div className='min-w-[100%] sm:min-w-[70%]'>
             <p className='text-center sm:text-base text-sm mb-2'>What do you wanna talk about?</p>
             <textarea
-                className='p-2 w-[100%] h-[4rem] text-start resize-none ring-2 ring-inset ring-gray-300 rounded-[.3rem]'
+                className='p-2 w-[100%] h-[4rem] text-start resize-none shadow-sm ring-1 ring-inset ring-gray-300 rounded-[.3rem]'
                 value={inputValue}
                 onChange={(event) => setInputValue(event.target.value)}
                 onKeyDown={handleEnterPress}>
