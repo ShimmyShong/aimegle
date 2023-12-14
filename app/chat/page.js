@@ -136,11 +136,11 @@ const page = () => {
                                     </div>
                                 }
                             })}
+                            {
+                                loading && <div className="loading-indicator text-gray-600 font-bold pb-3 px-4">
+                                    Stranger is typing...
+                                </div>}
                         </div>
-                        {
-                            loading && <div className="loading-indicator text-gray-600 font-bold pb-3 px-4">
-                                Stranger is typing...
-                            </div>}
                         {disconnect
                             ? <button
                                 type="button"
